@@ -1,0 +1,4 @@
+go/main
+nodejs/node_modules
+nodejs/yarn-error.log
+nodejs/yarn.lock
