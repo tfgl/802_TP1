@@ -5,11 +5,7 @@ import 'dotenv/config'
 const port = process.env.PORT || 3000
 const app  = exp()
 
-const log = fn => async(req, res) => {
-  console.table( (await fn(req, res)).flat() )
-}
-
-app.use('/station', log(router.station))
+app.use('/rest', router.station)
 
 app.listen(port, () => {
   console.log(`server running on port ${port}`)
