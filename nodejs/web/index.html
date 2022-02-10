@@ -1,0 +1,43 @@
+<html>
+<head>
+  <title> api </title>
+  <link rel="stylesheet" href="css/index.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <script>
+    let form = document.createElement("form");
+    form.setAttribute("method", "get");
+    form.setAttribute("action", "http://127.0.0.1:3000/rest/getVehicles");
+
+    fetch("http://127.0.0.1:3000/rest/getVehicles")
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        let e = document.createElement("select");
+        data.forEach((d) => {e.appendChild( document.createTextNode(d.name))})
+        console.log(data);
+      })
+      .catch(function (error) {
+        console.log("Error: " + error);
+      });
+
+    document.body.appendChild(form)
+  </script>
+
+   <form action="/action_page.php" id="carform">
+    <label for="fname">Firstname:</label>
+    <input type="text" id="fname" name="fname">
+    <input type="submit">
+  </form>
+
+  <label for="cars">Choose a car:</label>
+  <select name="cars" id="cars" form="carform">
+    <option value="volvo">Volvo</option>
+    <option value="saab">Saab</option>
+    <option value="opel">Opel</option>
+    <option value="audi">Audi</option>
+  </select>
+</body>
+</html>

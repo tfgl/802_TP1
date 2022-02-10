@@ -1,0 +1,105 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  font-family: 'Fira Code', 'Nanum Gothic Coding', monospace;
+}
+
+body {
+  background-color: #2b2a33;
+  color: #ccc;
+
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.guard {
+  min-width: 10px;
+}
+
+.row {
+  display: flex;
+  padding-bottom: 10px;
+  min-width: auto;
+  max-width: 86%;
+  overflow-x: auto;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+  scroll-behavior: smooth;
+  padding-top: 15px;
+}
+
+.row::-webkit-scrollbar {
+  display: none;
+}
+
+.tile {
+  margin-left: 5px;
+  margin-right: 5px;
+  height: 400px;
+  min-width: 300px;
+  background-color: #000;
+  padding-left: 18px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  border-radius: 5px;
+  box-shadow: 1px 1px 5px black;
+  overflow: hidden;
+}
+
+.tile:hover {
+  background-color: #151515;
+  transition: .5s;
+  transform: translate(0px, -10px);
+}
+
+.tile>h2 {
+  /*
+margin-left: 5px;
+width: 300px;
+background-color: #000;
+padding-left: 18px;
+padding-top: 8px;
+border-radius: 5 5 0 0px;
+box-shadow: 1px 1px 5px black;
+*/
+
+  text-align: left;
+  padding-bottom: 10px;
+  font-size: 2em;
+}
+
+.tile>ul {
+  overflow: scroll;
+  height: 352px;
+  width: 272px;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.tile>ul::-webkit-scrollbar {
+  display: none;
+}
+
+.tile>ul {
+  text-align: left;
+  line-height: 1.8;
+  white-space: nowrap;
+  /*padding-left: 15px;*/
+}
+
+a, a:visited {
+  font-size: 1.25em;
+  color: inherit;
+  opacity: 0.5;
+  transition: 0.5s;
+  text-decoration: none;
+  margin-bottom: 50px;
+}
+
+a:hover {
+  opacity: 1;
+}

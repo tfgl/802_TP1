@@ -1,9 +1,21 @@
+import 'dotenv/config'
 import exp from 'express';
 import axios from 'axios';
 import {log, extract} from '../utils/func.js';
+
+const apiKey = process.env.API_KEY
 const router = exp.Router();
 
-const apiKey = '5b3ce3597851110001cf62483c0d805f134e411280747d8b01f422d1';
+const cars = {
+  'tesla': {
+    autonomie: '500',
+    tempsDeRechargement: '10'
+  },
+  'zoe': {
+    autonomie: '200',
+    tempsDeRechargement: '5'
+  }
+}
 
 const getBornes = async(req, res) => {
   const lat = req.param("lat")
@@ -24,13 +36,16 @@ const getBornes = async(req, res) => {
 }
 
 const tempsDeParcours = async(req, res) => {
-  const tempsDeRechargement = req.param("tempsDeRechargement");
+  const car = cars[req.param("car")]
+  const autonomie = car.autonomie;//req.param("autonomie");
+  const tempsDeRechargement = car.tempsDeRechargement; //req.param("tempsDeRechargement");
   const slat  = parseInt(req.param("slat"))
   const slong = parseInt(req.param("slong"))
   const dlat  = parseInt(req.param("dlat"))
   const dlong = parseInt(req.param("dlong"))
 
   const baseUrl = `https://api.openrouteservice.org/v2/matrix/driving-car`
+
   const options = {
     headers: {
       'Content-Type': 'application/json',
@@ -38,6 +53,7 @@ const tempsDeParcours = async(req, res) => {
       'Accept': 'application/json, application/geo+json, application/gpx+xml, img/png; charset=utf-8'
     }
   }
+
   const body = {
     "locations":[[slat,slong],[dlat,dlong]],
     "metrics":["duration","distance"],
@@ -46,15 +62,22 @@ const tempsDeParcours = async(req, res) => {
 
   try {
     const resp = await axios.post(baseUrl, body, options)
-    res.status(200).json(resp.data.durations[0].every(element =>{ element != 0}))
+    const time = resp.data.durations[0].filter(element =>{ return element != 0})[0] / 60
+    res.status(200).json([parseInt(time/60), parseInt(time % 60)])
     return ['ok', resp.data.durations[0]];
   } catch( err ) {
     return ['err', err];
   }
 }
 
+const getVehicles = async (req, res) => {
+  res.status(200).json(cars)
+  return ['ok']
+}
+
 router.get('/tempsDeParcours', log(tempsDeParcours))
 router.get('/bornes', log(getBornes))
+router.get('/getVehicles', log(getVehicles))
 
 export default router;
 
