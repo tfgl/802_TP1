@@ -1,17 +1,18 @@
-<definitions name = "Vehicles"
-   targetNamespace = "http://www.examples.com/wsdl/Vehicles.wsdl"
-   xmlns = "http://schemas.xmlsoap.org/wsdl/"
-   xmlns:soap = "http://schemas.xmlsoap.org/wsdl/soap/"
-   xmlns:tns = "http://www.examples.com/wsdl/Vehicles.wsdl"
-   xmlns:xsd = "http://www.w3.org/2001/XMLSchema">
+<definitions name="Vehicles"
+   targetNamespace="http://www.examples.com/wsdl/Vehicles.wsdl"
+   xmlns="http://schemas.xmlsoap.org/wsdl/"
+   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+   xmlns:tns="http://www.examples.com/wsdl/Vehicles.wsdl"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 
-   <message name = "MyFunctionRequest">
+   <message name = "VehicleService">
       <part name = "testParam" type = "xsd:string"/>
    </message>
    <message name = "MyFunctionResponse">
       <part name = "status" type = "xsd:string"/>
    </message>
-   <portType name = "prot">
+
+   <portType name = "port">
       <operation name = "MyFunction">
          <input message = "tns:MyFunctionRequest"/>
          <output message = "tns:MyFunctionResponse"/>

@@ -1,0 +1,30 @@
+* architecture partage
+  - [ ] soap
+    - [ ] liste de véhicules, autonomie, temps de recharement
+
+  - [ ] rest
+    - [ ] temps de parcour
+    - [ ] cartographie, trajet du vehicule
+    - [ ] prise de recharement a proximiter des coordonees gps fournies
+
+ ** soap
+    - tesla model 3:
+      - autonomie: 491km
+      - temps de recharement: 24min
+
+    - volkswagen ID.3:
+      - autonomie: 350km
+      - temps de recharement: 39min
+
+    - renault megan:
+      - autonomie: 300km
+      - temps de recharement: 21min
+
+    - Hyundai Ioniq electric:
+      - autonomie: 228km
+      - temps de recharement: 36min
+
+    - nissan leaf 2:
+      - autonomie: 270km
+      - temps de recharement: 25min
+

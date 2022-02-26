@@ -41,6 +41,7 @@ body {
   margin-right: 5px;
   height: 400px;
   min-width: 300px;
+  max-width: 300px;
   background-color: #000;
   padding-left: 18px;
   padding-top: 8px;
