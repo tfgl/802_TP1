@@ -1,42 +1,34 @@
 import soap from 'soap'
 import express from 'express';
-import bodyParser from 'body-parser';
-//import http from 'http';
 import fs from 'fs'
-let xml = fs.readFileSync('wsdl/vehicles.wsdl', 'utf8');
+//import bodyParser from 'body-parser';
 
-let vehicleService = {
-  VehicleService: {
-    Port: {
-      Hello: function(args, cb, headers, req) {
-        console.log('SOAP `reallyDetailedFunction` request from ' + req.connection.remoteAddress);
-        return {
-          name: "Hi"
-        };
-      }
+const xml = fs.readFileSync('wsdl/vehicles.wsdl', 'utf8');
+const app = express();
+
+const myService = {
+  MyService: {
+    MyPort: {
+      GetAll: function(args) {
+        console.log("GetAll");
+        return {cars: [
+          {name: "Tesla model 3", autonomie: 490, reload: 24},
+          {name: "volkswagen", autonomie: 350, reload: 40},
+          {name: "renault megan", autonomie: 300, reload: 20},
+          {name: "Hyundai Ioniq", autonomie: 230, reload: 35},
+          {name: "nissan leaf", autonomie: 270, reload: 25}
+        ]};
+      },
     }
   }
 };
 
-//
-////http server example
-//let server = http.createServer((request,response) => {
-//  response.end('404: Not Found: ' + request.url);
-//});
-//
-//server.listen(8000);
-//soap.listen(server, '/wsdl', vehicleService, xml, () => {
-//  console.log('server initialized');
-//});
 
-//express server example
-let app = express();
-//body parser middleware are supported (optional)
-app.use(bodyParser.raw({type: function(){return true;}, limit: '5mb'}));
-app.listen(8001, function(){
-  //Note: /wsdl route will be handled by soap module
-  //and all other routes & middleware will continue to work
-  soap.listen(app, '/wsdl', vehicleService, xml, ()=>{
-    console.log('server initialized');
-  });
+//app.use(bodyParser.raw({
+//  type: () => {return true;},
+//  limit: '5mb'
+//}));
+
+app.listen(8000, () => {
+  soap.listen(app, '/wsdl', myService, xml);
 });

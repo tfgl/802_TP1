@@ -11,7 +11,6 @@ app.use(function (req, res, next) {
   next();
 });
 app.use('/rest', router.station)
-app.use('/soap', router.soap)
 
 app.listen(port, () => {
   console.log(`server running on port ${port}`)

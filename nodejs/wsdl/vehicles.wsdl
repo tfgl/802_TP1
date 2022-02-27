@@ -1,44 +1,44 @@
-<definitions name="Vehicles"
-   targetNamespace="http://www.examples.com/wsdl/Vehicles.wsdl"
-   xmlns="http://schemas.xmlsoap.org/wsdl/"
-   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-   xmlns:tns="http://www.examples.com/wsdl/Vehicles.wsdl"
-   xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<definitions name = "MyService"
+   targetNamespace = "http://www.examples.com/wsdl/MyService.wsdl"
+   xmlns = "http://schemas.xmlsoap.org/wsdl/"
+   xmlns:soap = "http://schemas.xmlsoap.org/wsdl/soap/"
+   xmlns:tns = "http://www.examples.com/wsdl/MyService.wsdl"
+   xmlns:xsd = "http://www.w3.org/2001/XMLSchema">
 
-   <message name = "VehicleService">
-      <part name = "testParam" type = "xsd:string"/>
+   <message name = "GetAllRequest">
+      <part name = "name" type = "xsd:string"/>
    </message>
-   <message name = "MyFunctionResponse">
+   <message name = "GetAllResponse">
       <part name = "status" type = "xsd:string"/>
    </message>
-
-   <portType name = "port">
-      <operation name = "MyFunction">
-         <input message = "tns:MyFunctionRequest"/>
-         <output message = "tns:MyFunctionResponse"/>
+   <portType name = "MyPort">
+      <operation name = "GetAll">
+         <input message = "tns:GetAllRequest"/>
+         <output message = "tns:GetAllResponse"/>
       </operation>
    </portType>
 
-   <binding name = "MyFunction_Binding" type = "tns:prot">
+   <binding name = "GetAll_Binding" type = "tns:MyPort">
       <soap:binding style = "rpc"
          transport = "http://schemas.xmlsoap.org/soap/http"/>
-      <operation name = "MyFunction">
-         <soap:operation soapAction = "MyFunction"/>
+      <operation name = "GetAll">
+         <soap:operation soapAction = "GetAll"/>
          <input>
-            <soap:body encodingStyle = "http://schemas.xmlsoap.org/soap/encoding/" namespace = "urn:examples:Vehicles" use = "encoded"/>
+            <soap:body encodingStyle = "http://schemas.xmlsoap.org/soap/encoding/" namespace = "urn:examples:MyService" use = "encoded"/>
          </input>
          <output>
-            <soap:body encodingStyle = "http://schemas.xmlsoap.org/soap/encoding/" namespace = "urn:examples:Vehicles" use = "encoded"/>
+            <soap:body encodingStyle = "http://schemas.xmlsoap.org/soap/encoding/" namespace = "urn:examples:MyService" use = "encoded"/>
          </output>
       </operation>
    </binding>
 
-   <service name = "Vehicles">
-     <documentation>WSDL File for Vehicles</documentation>
-     <port binding = "tns:MyFunction_Binding" name = "prot">
+   <service name = "MyService">
+      <documentation>WSDL File for MyService</documentation>
+      <port binding = "tns:GetAll_Binding" name = "MyPort">
          <soap:address
-            location = "http://www.examples.com/MyFunction/" />
+            location = "http://www.examples.com/GetAll/" />
       </port>
    </service>
 
 </definitions>
+
