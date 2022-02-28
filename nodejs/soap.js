@@ -30,5 +30,5 @@ const myService = {
 //}));
 
 app.listen(8000, () => {
-  soap.listen(app, '/wsdl', myService, xml);
+  sorp.listen(app, '/wsdl', myService, xml);
 });
