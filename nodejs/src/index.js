@@ -3,11 +3,15 @@ import router from './routes';
 import fs from 'fs';
 import path from 'path';
 import 'dotenv/config';
+import {fileURLToPath} from 'url';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const port = process.env.PORT || 3000
 const app  = exp()
 
 app.set('view engine', 'ejs');
+app.use(exp.static(path.join(__dirname, "html")));
 
 app.use( (req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -16,8 +20,13 @@ app.use( (req, res, next) => {
 });
 
 app.get('/', (req, res) => {
-  res.render('index');
+  res.sendFile(path.join(__dirname, "html", "index.html"));
 });
+
+app.post('/rest/tempsDeParcours', (req, res) => {
+  console.log("debug")
+  console.log(req.body)
+})
 
 app.use('/rest', router.station)
 

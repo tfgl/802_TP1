@@ -75,7 +75,7 @@ const getVehicles = async (req, res) => {
   return ['ok']
 }
 
-router.get('/tempsDeParcours', log(tempsDeParcours))
+router.post('/tempsDeParcours', log(tempsDeParcours))
 router.get('/bornes', log(getBornes))
 router.get('/getVehicles', log(getVehicles))
 
