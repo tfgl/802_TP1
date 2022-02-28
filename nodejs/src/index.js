@@ -1,15 +1,24 @@
-import exp from 'express'
-import router from './routes'
-import 'dotenv/config'
+import exp from 'express';
+import router from './routes';
+import fs from 'fs';
+import path from 'path';
+import 'dotenv/config';
 
 const port = process.env.PORT || 3000
 const app  = exp()
 
-app.use(function (req, res, next) {
+app.set('view engine', 'ejs');
+
+app.use( (req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
+
+app.get('/', (req, res) => {
+  res.render('index');
+});
+
 app.use('/rest', router.station)
 
 app.listen(port, () => {

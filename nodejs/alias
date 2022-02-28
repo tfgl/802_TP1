@@ -1,1 +1,0 @@
-alias temps='curl http://127.0.0.1:3000/rest/tempsDeParcours\?slat\=9\&slong\=45\&dlat\=10\&dlong\=45'

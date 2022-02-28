@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>favorites</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="light.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<div class="row">
+  <div class="tile">
+    <h2>tesla model 3</h2>
+    <img src="images/tesla.jpg" width="250" height="250"></img>
+    <ul>
+      <li>autonomie: 490</li>
+      <li>temps de rechargement: 24</li>
+    </ul>
+  </div>
+
+  <div class="tile">
+    <h2>volkswagen</h2>
+    <img src="images/zoe.jpg" width="250" height="250"></img>
+    <ul>
+      <li>autonomie: 350</li>
+      <li>temps de rechargement: 40</li>
+    </ul>
+  </div>
+
+  <div class="tile">
+    <h2>renault megan</h2>
+    <img src="images/zoe.jpg" width="250" height="250"></img>
+    <ul>
+      <li>autonomie: 300</li>
+      <li>temps de rechargement: 20</li>
+    </ul>
+  </div>
+
+  <div class="tile">
+    <h2>Hyundai Ioniq</h2>
+    <img src="images/zoe.jpg" width="250" height="250"></img>
+    <ul>
+      <li>autonomie: 230</li>
+      <li>temps de rechargement: 35</li>
+    </ul>
+  </div>
+
+  <div class="tile">
+    <h2>nissan leaf</h2>
+    <img src="images/zoe.jpg" width="250" height="250"></img>
+    <ul>
+      <li>autonomie: 270</li>
+      <li>temps de rechargement: 30</li>
+    </ul>
+  </div>
+  <div class="guard"></div>
+</div>
+<script>
+  Object.values(document.getElementsByClassName('tile'))
+    .forEach( el => {
+      el.addEventListener('click', event => {
+        console.log(el.children[0].innerText);
+    });
+});
+</script>
+</body>
+</html>

@@ -36,13 +36,13 @@ const getBornes = async(req, res) => {
 }
 
 const tempsDeParcours = async(req, res) => {
-  const car = cars[req.param("car")]
-  const autonomie = car.autonomie;//req.param("autonomie");
-  const tempsDeRechargement = car.tempsDeRechargement; //req.param("tempsDeRechargement");
-  const slat  = parseInt(req.param("slat"))
-  const slong = parseInt(req.param("slong"))
-  const dlat  = parseInt(req.param("dlat"))
-  const dlong = parseInt(req.param("dlong"))
+  const car = req.param("car");
+  const src = req.param("src");
+  const dst = req.param("dst");
+  const slat  = parseInt(src.lat);
+  const slong = parseInt(src.long);
+  const dlat  = parseInt(dst.lat);
+  const dlong = parseInt(dst.long);
 
   const baseUrl = `https://api.openrouteservice.org/v2/matrix/driving-car`
 
