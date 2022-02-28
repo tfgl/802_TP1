@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Display a map on a webpage</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js"></script>
+<style>
+body { margin: 0; padding: 0; }
+#map { position: absolute; top: 0; bottom: 0; height: 75%; width: 100%; }
+</style>
+</head>
+
+<body>
+<div id="map"></div>
+<script>
+  mapboxgl.accessToken = 'pk.eyJ1IjoiYW9ldSIsImEiOiJjbDA2czl2b3AwMGxzM2xxcHBtcm5vMm94In0.ImFR4kwS9cJ8tnz5jKBd4Q'; 
+  let points = [];
+  let dst = [];
+  const map = new mapboxgl.Map({
+    container: 'map', // container ID
+    style: 'mapbox://styles/mapbox/streets-v11', // style URL
+    center: [-74.5, 40], // starting position [lng, lat]
+    zoom: 9 // starting zoom
+  });
+  map.on('click', e => {
+    points.push(e.lngLat);
+        console.log(mapboxgl.LngLat.convert);
+    if(points.length >= 2) {
+      for( let i=0; i<points.length-1; i++) {
+        let a = new mapboxgl.LngLat.convert(points[i]);
+        let b = new mapboxgl.LngLat.convert(points[i+1]);
+        dst.push( a.distance(b) );
+      }
+    }
+    console.log(dst);
+  })
+</script>
+ 
+</body>
+</html>

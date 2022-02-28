@@ -16,6 +16,11 @@ body {
   text-align: center;
 }
 
+a, a:visited {
+  text-decoration: none;
+  color: #fff;
+}
+
 .guard {
   min-width: 10px;
 }
@@ -58,19 +63,9 @@ body {
 }
 
 .tile>h2 {
-  /*
-margin-left: 5px;
-width: 300px;
-background-color: #000;
-padding-left: 18px;
-padding-top: 8px;
-border-radius: 5 5 0 0px;
-box-shadow: 1px 1px 5px black;
-*/
-
-  text-align: left;
-  padding-bottom: 10px;
+  text-align: center;
   font-size: 2em;
+  padding-bottom: 10px;
 }
 
 .tile>ul {
@@ -89,18 +84,17 @@ box-shadow: 1px 1px 5px black;
   text-align: left;
   line-height: 1.8;
   white-space: nowrap;
-  /*padding-left: 15px;*/
 }
 
-a, a:visited {
-  font-size: 1.25em;
-  color: inherit;
-  opacity: 0.5;
-  transition: 0.5s;
-  text-decoration: none;
-  margin-bottom: 50px;
+#map {
+  position: absolute;
+  top: 5%;
+  bottom: 0;
+  height: 85%;
+  width: 90%;
 }
 
-a:hover {
-  opacity: 1;
+#reset {
+  position: absolute;
+  top: 90%;
 }

@@ -19,14 +19,17 @@ app.use( (req, res, next) => {
   next();
 });
 
+app.use(
+  exp.urlencoded({
+    extended: true
+  })
+)
+
+app.use(exp.json())
+
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, "html", "index.html"));
 });
-
-app.post('/rest/tempsDeParcours', (req, res) => {
-  console.log("debug")
-  console.log(req.body)
-})
 
 app.use('/rest', router.station)
 
