@@ -21,51 +21,7 @@ const getBornes = async(lng, lat, rayon) => {
   const apiRes = await axios.get(url)
   const bornes = apiRes.data.records.map(extract(template))
 
-  console.log(`${lng} ${lat} ${rayon} ${url}`)
-  console.table(bornes)
-
   return bornes;
-}
-
-const tempsDeParcours = async(req, res) => {
-  const car = req.body.car;
-  const src = req.body.src;
-  const dst = req.body.dst;
-  const slat  = parseInt(src.lat);
-  const slong = parseInt(src.long);
-  const dlat  = parseInt(dst.lat);
-  const dlong = parseInt(dst.long);
-
-  const baseUrl = `https://api.openrouteservice.org/v2/matrix/driving-car`
-
-  const options = {
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': apiKey,
-      'Accept': 'application/json, application/geo+json, application/gpx+xml, img/png; charset=utf-8'
-    }
-  }
-
-  const body = {
-    "locations":[[slat,slong],[dlat,dlong]],
-    "metrics":["duration","distance"],
-    "units":"km"
-  }
-
-  try {
-    console.log(body)
-    const resp = await axios.post(baseUrl, body, options)
-    const time = resp.data.durations[0].filter(element =>{ return element != 0})[0] / 60
-    res.status(200).json([parseInt(time/60), parseInt(time % 60)])
-    return ['ok', resp.data.durations[0]];
-  } catch( err ) {
-    return ['err', err];
-  }
-}
-
-const getVehicles = async (req, res) => {
-  res.status(200).json(cars)
-  return ['ok']
 }
 
 const trajet = async (req, res) => {
@@ -91,6 +47,7 @@ const trajet = async (req, res) => {
   console.log(matrix)
 
   travelTime = matrix.durations[0].reduce( (acc, t) => { return acc + t }, 0) / 3600
+  travelTime += Math.floor(dstTotal / car.autonomie) / 3600
   console.log(travelTime)
   console.log(dstTotal)
 
@@ -98,9 +55,41 @@ const trajet = async (req, res) => {
   return ["ok"]
 }
 
+const itineraire = async (req, res) => {
+  const steps = req.body.steps;
+  const car = cars[req.body.car];
+  console.log(steps[0]);
+
+  let autonomie = car.autonomie;
+  let dst = 0;
+  let pos = {lng: 0, lat: 0};
+  let dstTotal = 0;
+  const stations = steps.reduce( (acc, step) => {
+    const stepDst = step.distance;
+    const pos = step.intersections[0].location;
+    const nextDst = dst + stepDst;
+
+    steps.forEach( s => {travelTime += s.duration})
+
+    if( autonomie < nextDst ) {
+      const station = getBornes(pos[0], pos[1], autonomie)[0];
+      acc.push(station);
+      autonomie = car.autonomie;
+      dst = 0;
+      travelTime = car.reloadTime;
+    }
+    else {
+      autonomie -= stepDst;
+      dst += stepDst;
+      dstTotal += stepDst;
+    }
+  }, []);
+
+  res.status(200).json({dstTotal, travelTime, stations})
+  return ["ok", stations]
+}
+
 router.post('/trajet', log(trajet));
-//router.post('/tempsDeParcours', log(tempsDeParcours))
-//router.get('/bornes', log(getBornes))
-//router.get('/getVehicles', log(getVehicles))
+router.post('/itineraire', log(itineraire));
 
 export default router;

@@ -1,4 +1,5 @@
 import exp from 'express';
+import bodyParser from 'body-parser';
 import soap from 'soap'
 import router from './routes';
 import fs from 'fs';
@@ -23,6 +24,7 @@ app.use( (req, res, next) => {
 });
 
 app.use(
+  bodyParser.json({ limit: "50mb" }),
   exp.urlencoded({
     extended: true
   })
