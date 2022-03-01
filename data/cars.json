@@ -1,0 +1,82 @@
+[
+  {
+    "name": "Aiway U5",
+    "price":39700,
+    "autonomy":385,
+    "slow":600,
+    "fast":35,
+    "pathImage": "./images/1.jpg"
+  },
+  {
+    "name":"Audi e-tron 50 quattron",
+    "price":71900,
+    "autonomy":339,
+    "slow":310,
+    "fast":37,
+    "pathImage": "./images/2.jpg"
+  },
+  {
+    "name":"Sportback 55 quattro",
+    "price":86800,
+    "autonomy":446,
+    "slow":380,
+    "fast":46,
+    "pathImage": "./images/3.jpg"
+  },
+  {
+    "name":"RS e-tron GT",
+    "price":140700,
+    "autonomy":472,
+    "slow":400,
+    "fast":34,
+    "pathImage": "./images/4.jpg"
+  },
+  {
+    "name":"Audi Q4 e-tron 35",
+    "price":42800,
+    "autonomy":345,
+    "slow":610,
+    "fast":23,
+    "pathImage": "./images/5.jpg"
+  },
+  {
+    "name": "Audi Q4 e-tron Sportback 35 ",
+    "price":44800,
+    "autonomy":345,
+    "slow":370,
+    "fast":23,
+    "pathImage": "./images/6.jpg"
+  },
+  {
+    "name":"BMW i3",
+    "price":39950,
+    "autonomy":310,
+    "slow":166,
+    "fast":40,
+    "pathImage": "./images/7.jpg"
+  },
+  {
+    "name":"BMW i4 eDrive 40",
+    "price":59700,
+    "autonomy":590,
+    "slow":500,
+    "fast":39,
+    "pathImage": "./images/8.jpg"
+  },
+  {
+    "name":"BMW iX",
+    "price":86250,
+    "autonomy":600,
+    "slow":580,
+    "fast":40,
+    "pathImage": "./images/9.jpg"
+  },
+  {
+    "name":"BMW iX3",
+    "price":69950,
+    "autonomy":460,
+    "slow":325,
+    "fast":39,
+    "pathImage": "./images/10.jpg"
+  }
+]

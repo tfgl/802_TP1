@@ -51,66 +51,6 @@ Object.values(document.getElementsByClassName('tile')).forEach( el => {
     // create the map
     const map = initMap()
 
-    const directions = new MapboxDirections({
-      accessToken: mapboxgl.accessToken,
-      unit: 'metric',
-      profile: 'mapbox/driving',
-      alternatives: false,
-      geometries: 'geojson',
-      controls: { instructions: false },
-      flyTo: false
-    });
-
-    map.addControl(directions, 'top-right');
-
-    let travelTime = 0;
-    let distance = 0;
-    // lors de l'ajout d'une route
-    directions.on('route', (event) => {
-      const steps = event.route[0].legs[0].steps;
-      travelTime += event.route[0].duration;
-      distance   += event.route[0].distance / 1000;
-      console.log('-------')
-      console.log(steps)
-      console.log('-------')
-
-      const options = {
-        method: 'POST',
-        body: JSON.stringify({steps, car}),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      };
-
-      fetch(URL + "/rest/itineraire", options).then( data => {
-        let dataDoc = document.getElementById("data");
-        dataDoc.innerHTML = "";
-        data.text().then( dataText => {
-          datajson = JSON.parse(dataText);
-          travelTime += datajson.travelTime;
-          let time = document.createElement("p")
-          let h = Math.floor( travelTime )
-          let min = Math.floor((travelTime % 1) * 60)
-          time.innerText = `travel time: ${h}h${min}`
-          dataDoc.appendChild(time)
-          let dst = document.createElement("p")
-          dst.innerText = `total distance: ${distance}km`
-          dataDoc.appendChild(dst);
-
-          datajson.stations.forEach( station => {
-            let point = [station.xlongitude, station.ylatitude];
-            points.push(point)
-            const marker = new mapboxgl.Marker()
-              .setLngLat(point)
-              .addTo(map);
-            markers.push(marker);
-          })
-          stops.push(e.lngLat);
-        })
-      })
-    })
-
-
     // reset map button
     resetButton(map)
 

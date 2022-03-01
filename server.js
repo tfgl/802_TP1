@@ -1,16 +1,12 @@
 import exp from 'express';
 import bodyParser from 'body-parser';
-import soap from 'soap'
 import router from './routes';
-import fs from 'fs';
 import path from 'path';
 import 'dotenv/config';
-import getAll_Service from './soap';
 import {fileURLToPath} from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const xml = fs.readFileSync('wsdl/vehicles.wsdl', 'utf8');
 const port = process.env.PORT || 3000
 const app  = exp()
 
@@ -40,5 +36,4 @@ app.use('/rest', router.station)
 
 app.listen(port, () => {
   console.log(`server running on port ${port}`)
-  soap.listen(app, '/wsdl', getAll_Service, xml);
 })

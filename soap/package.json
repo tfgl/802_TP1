@@ -1,0 +1,27 @@
+{
+  "name": "node-soap-example",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "start": "node --experimental-specifier-resolution=node server.js && node --experimental-specifier-resolution=node app.js",
+    "dev_app": "nodemon --experimental-specifier-resolution=node app.js",
+    "dev_server": "nodemon --experimental-specifier-resolution=node server.js"
+  },
+  "keywords": [
+    "SOAP",
+    "node.js",
+    "express",
+    "SOAP-server",
+    "SOAP-client",
+    "server",
+    "client",
+    "web",
+    "service"
+  ],
+  "dependencies": {
+    "axios": "^0.26.0",
+    "express": "^4.15.2",
+    "soap": "^0.19.0"
+  },
+  "type": "module"
+}
