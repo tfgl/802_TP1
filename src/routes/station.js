@@ -2,37 +2,20 @@ import 'dotenv/config'
 import exp from 'express';
 import axios from 'axios';
 import geolib from 'geolib';
+import mbxClient from '@mapbox/mapbox-sdk';
+import mbxMatrix from '@mapbox/mapbox-sdk/services/matrix';
 import {log, extract} from '../utils/func.js';
+import cars from '../cars.json';
 
 const apiKey = process.env.API_KEY
 const router = exp.Router();
 
-const cars = {
-  "Tesla model 3": {
-    autonomie: 490,
-    reloadTime: 25
-  },
-  "Volkswagen ID.3": {
-    autonomie: 350,
-    reloadTime: 40
-  },
-  "Renault megan": {
-    autonomie: 300,
-    reloadTime: 20
-  },
-  "Hyundai Ioniq electric": {
-    autonomie: 230,
-    reloadTime: 35
-  },
-  "Nissan leaf 2": {
-    autonomie: 270,
-    reloadTime: 25
-  },
-}
+const baseClient = mbxClient({ accessToken: 'pk.eyJ1IjoiYW9ldSIsImEiOiJjbDA2czl2b3AwMGxzM2xxcHBtcm5vMm94In0.ImFR4kwS9cJ8tnz5jKBd4Q' });
+const matrixClient = mbxMatrix(baseClient)
 
 const getBornes = async(lng, lat, rayon) => {
   const baseUrl = "https://opendata.reseaux-energies.fr/api/records/1.0/search/?"
-  const url = `${baseUrl}dataset=bornes-irve&sort=n_amenageur&facet=region&geofilter.distance=${lat}%2C${lng}%2C${rayon}`
+  const url = `${baseUrl}dataset=bornes-irve&q=&facet=region&geofilter.distance=${lat}%2C${lng}%2C${rayon}`
   const template = ["n_station", "ylatitude", "xlongitude", "acces_recharge"]
 
   const apiRes = await axios.get(url)
@@ -86,22 +69,32 @@ const getVehicles = async (req, res) => {
 }
 
 const trajet = async (req, res) => {
-  let car = cars[req.body.car];
-  let stops = req.body.stops
-  let dstTotal = 0; // metre
-  let travelTime = 0; // secondes
+  const car = cars[req.body.car];
+  const stops = req.body.stops;
+  let dstTotal = 0;
+  let travelTime = 0;
 
   for(let i=0; i<stops.length-1; i++) {
     dstTotal += geolib.getDistance(stops[i], stops[i+1]);
   }
+  dstTotal /= 1000;
+  getBornes(stops[0].lng, stops[0].lat, 10000);
 
-  getBornes(stops[0].lng, stops[0].lat, 10);
+  let points = []
+  stops.forEach( p => {points.push({coordinates: [p.lng, p.lat]})})
 
-  console.log(car)
-  console.table(stops)
-  console.log(dstTotal/1000);
+  let response = await matrixClient.getMatrix({
+    points: points,
+    profile: 'driving'
+  }).send()
+  const matrix = response.body;
+  console.log(matrix)
 
-  res.status(200).send("ok");
+  travelTime = matrix.durations[0].reduce( (acc, t) => { return acc + t }, 0) / 3600
+  console.log(travelTime)
+  console.log(dstTotal)
+
+  res.status(200).json({dstTotal, travelTime});
   return ["ok"]
 }
 

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "PORT=3000 nodemon --experimental-specifier-resolution=node index.js",
-    "start": "PORT=4000 node --experimental-specifier-resolution=node index.js",
+    "start": "PORT=3000 node --experimental-specifier-resolution=node index.js",
     "soap": "PORT=8000 nodemon --experimental-specifier-resolution=node soap.js",
     "soapcall": "PORT=8000 nodemon --experimental-specifier-resolution=node apiTest/soapcall.js"
   },

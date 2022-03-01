@@ -8,13 +8,14 @@
   <link href="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.css" rel="stylesheet">
   <script src="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js"></script>
   <script src="https://unpkg.com/@mapbox/mapbox-sdk/umd/mapbox-sdk.min.js"></script>
+  <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.9/mapbox-gl-draw.js"></script>
 </head>
 <body>
 <h1> choisissez une voiture </h1>
 <div class="row">
   <div class="tile">
     <h2>Tesla model 3</h2>
-    <img src="images/tesla.jpg" width="250" height="250"></img>
+    <img src="images/tsl3.webp" width="250" height="250"></img>
     <ul>
       <li class="autonomie" >autonomie: 490</li>
       <li class="reloadTime">temps de rechargement: 24</li>
@@ -23,7 +24,7 @@
 
   <div class="tile">
     <h2>Volkswagen</h2>
-    <img src="images/zoe.jpg" width="250" height="250"></img>
+    <img src="images/volks.jpg" width="250" height="250"></img>
     <ul>
       <li class="autonomie" >autonomie: 350</li>
       <li class="reloadTime">temps de rechargement: 40</li>
@@ -32,7 +33,7 @@
 
   <div class="tile">
     <h2>Renault megan</h2>
-    <img src="images/zoe.jpg" width="250" height="250"></img>
+    <img src="images/renault.jpg" width="250" height="250"></img>
     <ul>
       <li class="autonomie" >autonomie: 300</li>
       <li class="reloadTime">temps de rechargement: 20</li>
@@ -41,7 +42,7 @@
 
   <div class="tile">
     <h2>Hyundai Ioniq</h2>
-    <img src="images/zoe.jpg" width="250" height="250"></img>
+    <img src="images/hyunda.jpg" width="250" height="250"></img>
     <ul>
       <li class="autonomie" >autonomie: 230</li>
       <li class="reloadTime">temps de rechargement: 35</li>
@@ -50,7 +51,7 @@
 
   <div class="tile">
     <h2>Nissan leaf</h2>
-    <img src="images/zoe.jpg" width="250" height="250"></img>
+    <img src="images/nissan-leaf.jpg" width="250" height="250"></img>
     <ul>
       <li>autonomie: 270</li>
       <li>temps de rechargement: 25</li>
@@ -58,99 +59,6 @@
   </div>
   <div class="guard"></div>
 </div>
-<script>
-  const URL="http://127.0.0.1:3000"
-  mapboxgl.accessToken = 'pk.eyJ1IjoiYW9ldSIsImEiOiJjbDA2czl2b3AwMGxzM2xxcHBtcm5vMm94In0.ImFR4kwS9cJ8tnz5jKBd4Q'; 
-  let stops = [];
-  let points = [];
-  let dst = [];
-  let markers = [];
-
-  // for each card, on click, the car and show the map
-  Object.values(document.getElementsByClassName('tile')).forEach( el => {
-    el.addEventListener('click', event => {
-      console.log(el.children[0].innerText);
-      let car = document.getElementsByClassName("tile")[0].getElementsByTagName("h2")[0].innerText;
-
-      // change view to map
-      document.getElementsByTagName("body")[0].innerHTML = "<div id=\"map\"></div><button type=\"button\" id=\"reset\">reset</button>";
-
-      // reset map button
-      document.getElementById("reset").addEventListener('click', event => {
-        console.log("reset");
-        stops = [];
-        points = [];
-        dst = [];
-        markers.forEach( marker => {marker.remove()});
-        if( map.getSource('route') ) {
-          map.removeLayer('route');
-          map.removeSource('route');
-        }
-      })
-
-      // create the map
-      const map = new mapboxgl.Map({
-        container: 'map', // container ID
-        style: 'mapbox://styles/mapbox/streets-v11', // style URL
-        center: [3, 46], // starting position [lng, lat]
-        zoom: 6 // starting zoom
-      });
-
-      // add a stop an click, send stops to api if stops.length >= 2
-      map.on('click', e => {
-        let point = [e.lngLat.lng, e.lngLat.lat]
-        points.push(point)
-        stops.push(point);
-
-        const marker = new mapboxgl.Marker()
-          .setLngLat(point)
-          .addTo(map);
-        markers.push(marker);
-
-        if(stops.length >= 2) {
-          if( map.getSource('route') ) {
-            map.removeLayer('route');
-            map.removeSource('route');
-          }
-          map.addSource('route', {
-            'type': 'geojson',
-            'data': {
-              'type': 'Feature',
-              'properties': {},
-              'geometry': {
-                'type': 'LineString',
-                'coordinates': points
-              }
-            }
-          });
-          map.addLayer({
-            'id': 'route',
-            'type': 'line',
-            'source': 'route',
-            'layout': {
-              'line-join': 'round',
-              'line-cap': 'round'
-            },
-            'paint': {
-              'line-color': '#888',
-              'line-width': 8
-            }
-          });
-
-          const options = {
-            method: 'POST',
-            body: JSON.stringify({stops, car}),
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          };
-
-          fetch(URL + "/rest/trajet", options);
-        }
-        console.log(stops);
-      })
-    });
-  });
-</script>
+<script src="main.js"> </script>
 </body>
 </html>

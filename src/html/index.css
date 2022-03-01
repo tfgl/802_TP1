@@ -88,13 +88,20 @@ a, a:visited {
 
 #map {
   position: absolute;
-  top: 5%;
+  top: 0;
   bottom: 0;
-  height: 85%;
-  width: 90%;
+  width: 100%;
 }
 
-#reset {
+.info-box {
   position: absolute;
-  top: 90%;
+  margin: 20px;
+  width: 25%;
+  top: 0;
+  bottom: 20px;
+  padding: 20px;
+  background-color: #fff;
+  overflow-y: scroll;
+  left: 0;
+  color: #000;
 }
